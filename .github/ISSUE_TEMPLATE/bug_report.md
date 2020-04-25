@@ -23,8 +23,8 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Desktop (please complete the following information):**
- - OS: [e.g., Ubuntu]
+**Setup (please complete the following information):**
+ - OS: [e.g., Ubuntu 18.04]
  - Python Version: [e.g., 3.6.2]
  - Release Version: [e.g., v2.0.0]
 

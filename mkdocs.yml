@@ -4,8 +4,7 @@ repo_url: https://github.com/StrangeRanger/inspector
 
 theme:
   name: material
-  features:
-    - instant
+  features: instant
   icon:
     repo: fontawesome/brands/github
 

@@ -52,9 +52,9 @@ if distribution == "ubuntu":
         supported = True
     else:
         supported = False
-elif distribution == "deian":
+elif distribution == "debian":
     if distro_version == "9":
-        from modules.debian10 import *
+        from modules.ubuntudebian import *
         supported = True
     elif distro_version == "10":
         from modules.debian10 import *

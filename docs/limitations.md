@@ -7,11 +7,17 @@ If a user with sudo power, call him Mal, switches to another user who may or may
   * Semi-built in helper: Because the script will identify users who use su and sudo su, Mal will be identified as an individual who switched users.
   * Method of weeding out the true culprit: Look through the auth.log at the logs taken on the given day that the incident took place... To know what to look for, please refer to "identifying-patterns.odt"; it contains all auth.log logs that are created in relation to the given commands and there relative success or failure...
 
-## Check if these are actually true
+Affected Distributions:
 
-Due to the system's lack of output, if a user tries to log into an account via su <username>, the script will not be able to identify that individual as bad user.
+* All officially supported linux distros
 
-Due to how the script (has to) identifies users if a user inputs their sudo password correctly when executing sudo su <username>, but the username does not exist, they will not be marked at all.
+## `su <non-existent user>`
+
+Due to a lack of logging to the system `auth.log`, if a user uses `su <username>` or `sudo su <username>`, where the username is a user that does not exist on the system, the program will not be able to report that a user tried to switch to another user on the system.
+
+Affected Distributions:
+
+* Debian 10.x
 
 ## What it doesn't do
 

@@ -1,12 +1,17 @@
 # Program Features and Notes
 
-This script identifies users who have used sudo bash, sudo -i, sudo su, and su/su root
+Here is a list of features and notes about the program, that haven't already been explained:
 
-If a user on the system created a temporary account in order to log in as root, then deletes the account after he or she is done with it, the temporary account will still show up in the scan results.
-
-Any and all users who use sudo su to change to another user will be marked/identified. This makes it easier to identify a user who tries to blame a different user for logging in as root. (see Script Notes/Faults below)
-
-Any and all users who attempt to either log into the root account or switch users, and are unsuccessful, will be identified and marked down.
-
-Users who are not in the sudoers file and try to execute a command with root privilege, will be identified.
-
+* To switch to root or another user's account, a user has to execute one of several commands. Inspector is capable of identifying users who have attempted to switch to root or another user's account via:
+    * su
+    * su root
+    * su [username]
+    * sudo su
+    * sudo su root
+    * sudo su [username]
+    * sudo -i
+    * sudo bash
+    * sudo [command]
+        * Specific to when the user executing the command doesn't have permission to use sudo
+* Even if an account was deleted after either switch to root or another user on the system, it will still be identified.
+* The program will identify users who are not in the sudoers file (don't have perms to use sudo) and try to execute a command with root privilege.

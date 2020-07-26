@@ -2,7 +2,7 @@
 
 ## Falsely Blaming Users
 
-If a malicious user with sudo power switches to a different user on the system, then attempts to switch to root or another user, the victim (the user who was initially switched to) will end up being blamed for the use that command/action, rather than the malicious user.
+If a malicious user with sudo power switches to a different user on the system, then attempts to switch to root or *another* user, the victim (the user who was initially switched to) will end up being blamed for the use that command/action, rather than the malicious user.
 
 Below is a list of all the affected linux distributions:
 

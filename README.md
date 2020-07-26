@@ -2,7 +2,7 @@
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
-Inspector is a security tool with the puprouse of identifying users who have both successfully and unsuccessfully logged into the root account or switched to another user on the system.
+Inspector is a security tool with the purpose of identifying users who have both successfully and unsuccessfully switched to root or another user linux based distributions.
 
 For more information on Inspector, please visit https://inspector-project.readthedocs.io/en/latest
 

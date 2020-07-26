@@ -1,4 +1,4 @@
-# ?????
+# Identifying Logs (Doc 1)
 
 When users use `su`:
 
@@ -25,7 +25,7 @@ Other `sudo` alternatives:
 | **Successful**   | **Log input:** `sudo: <username> : TTY=<n> ; PWD= <pwd> ; USER=root ; COMMAND=/bin/bash`<br>*Identifying Symbol:* +                                   | **Log input:** `sudo: <username> : TTY=<n> ; PWD= <pwd> ; USER=root ; COMMAND=/bin/bash`<br>*Identifying Symbol:* +                                   |
 | **Unsuccessful** | **Log input:** `sudo: <username> : <n> incorrect password attempts ; TTY=<n> ; PWD=<pwd> ; USER=root ; COMMAND=/bin/bash`<br>*Identifying Symbol:* \* | **Log input:** `sudo: <username> : <n> incorrect password attempts ; TTY=<n> ; PWD=<pwd> ; USER=root ; COMMAND=/bin/bash`<br>*Identifying Symbol:* \* |
 
-When people use `sudo` with other commands:
+When users who don't have sudo power use `sudo`:
 
 |                                                           | sudo [command]                                                                                                                                          |
 | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |

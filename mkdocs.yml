@@ -36,7 +36,7 @@ nav:
   - Features: features.md
   - Limitations: limitations.md
   - Dev Documentation: 
-    - Readme: dev-docs/index.md
+    - Dev Readme: dev-docs/index.md
     - Doc 1: dev-docs/doc-1.md
     - Doc 2: dev-docs/doc-2.md
   - License: license.md

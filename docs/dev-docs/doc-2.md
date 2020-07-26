@@ -1,12 +1,12 @@
-# ???????
+# Identifying Logs (Doc 2)
 
 When users use `su`:
 
-|                                             | su                                                                               | su root                                                                          | su [username]                                                                                 |
-| ------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| **Successful**                              | **Log input:** `Successful su for root by <username>`<br>*Identifying Symbol:* + | **Log input:** `Successful su for root by <username>`<br>*Identifying Symbol:* + | **Log input:** `Successful su for <victim_username> by <username>`<br>*Identifying Symbol:* – |
-| **Unsuccessful**                            | **Log input:** `FAILED su for root by <username>`<br>*Identifying Symbol:* \*    | **Log input:** `FAILED su for root by <username>`<br>*Identifying Symbol:* \*    | **Log input:** `FAILED su for <victim_username> by <username>`<br>*Identifying Symbol:* /     |
-| **Attempt when <username\> does not exist** | N/A                                                                              | N/A                                                                              | **Log input:** `FAILED su for <victim_username> by <username>`<br>*Identifying Symbol:* /     |
+|                                                        | su                                                                               | su root                                                                          | su [username]                                                                                 |
+| ------------------------------------------------------ | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| **Successful**                                         | **Log input:** `Successful su for root by <username>`<br>*Identifying Symbol:* + | **Log input:** `Successful su for root by <username>`<br>*Identifying Symbol:* + | **Log input:** `Successful su for <victim_username> by <username>`<br>*Identifying Symbol:* – |
+| **Unsuccessful**                                       | **Log input:** `FAILED su for root by <username>`<br>*Identifying Symbol:* \*    | **Log input:** `FAILED su for root by <username>`<br>*Identifying Symbol:* \*    | **Log input:** `FAILED su for <victim_username> by <username>`<br>*Identifying Symbol:* /     |
+| **Successful attempt when <username\> does not exist** | N/A                                                                              | N/A                                                                              | **Log input:** `FAILED su for <victim_username> by <username>`<br>*Identifying Symbol:* /     |
 
 When users use `sudo su`:
 
@@ -23,7 +23,7 @@ Other `sudo` alternatives:
 | **Successful**   | **Log input:** `<username> : TTY=<n> ; PWD= <pwd> ; USER=root ; COMMAND=/bin/bash`<br>*Identifying Symbol:* +                                   | **Log input:** `<username> : TTY=<n> ; PWD= <pwd> ; USER=root ; COMMAND=/bin/bash`<br>*Identifying Symbol:* +                                   |
 | **Unsuccessful** | **Log input:** `<username> : <n> incorrect password attempts ; TTY=<n> ; PWD=<pwd> ; USER=root ; COMMAND=/bin/bash`<br>*Identifying Symbol:* \* | **Log input:** `<username> : <n> incorrect password attempts ; TTY=<n> ; PWD=<pwd> ; USER=root ; COMMAND=/bin/bash`<br>*Identifying Symbol:* \* |
 
-When people use `sudo` with other commands:
+When users who don't have sudo power use `sudo`:
 
 |                                                           | sudo [command]                                                                                                                                    |
 | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |

@@ -8,7 +8,14 @@ For more information on Inspector, please visit https://inspector-project.readth
 
 ## Getting Started
 
-Inpsector currently only has one dependecy called distro, which is used to help identify what distribution it is running on. To install the dependency on your system, run the following command: `python3 -m pip install -r requirements.txt`
+### Requirements
+
+* python 3.x
+* distro
+
+### Installing Dependencies
+
+To install all of the dependencies for Inspector, run the following command: `python3 -m pip install -r requirements.txt`
 
 ## Officially Supported Linux Distributions
 

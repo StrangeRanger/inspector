@@ -34,11 +34,6 @@ defclr = "\033[0m"
 #
 ################################################################################
 
-# Checks to see if this script was executed with root privilege
-if geteuid() != 0:
-    exit("{}Please run this script as root or with root privilege{}\n\n"
-         "Exiting...".format(red, defclr))
-
 try:
     import distro
 except ImportError:
@@ -74,6 +69,11 @@ if not supported:
          "Distro Version: {}\n\n"
          "Your operating system is not supported by inspector{}\n\n"
          "Exiting...".format(red, distribution, distro_version, defclr))
+
+# Checks to see if this script was executed with root privilege
+if geteuid() != 0:
+    exit("{}Please run this script as root or with root privilege{}\n\n"
+         "Exiting...".format(red, defclr))
 
 
 ################################################################################

@@ -1,6 +1,7 @@
 # Inspector
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Documentation Status](https://readthedocs.org/projects/inspector-project/badge/?version=latest)](https://inspector-project.readthedocs.io/en/latest/?badge=latest)
 
 Inspector is a security tool with the purpose of identifying users who have both successfully and unsuccessfully switched to root or another user linux based distributions.
 

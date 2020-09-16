@@ -4,7 +4,6 @@
 [![Maintenance](https://img.shields.io/maintenance/yes/2020)](https://github.com/StrangeRanger/inspector/graphs/commit-activity)
 [![Documentation Status](https://readthedocs.org/projects/inspector-project/badge/?version=latest)](https://inspector-project.readthedocs.io/en/latest/?badge=latest)
 [![GPLv2 license](https://img.shields.io/badge/License-GPLv2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
-[![Version](https://img.shields.io/github/v/release/StrangeRanger/inspector)](https://github.com/StrangeRanger/inspector/releases/latest)
 ![Platform](https://img.shields.io/badge/platform-linux-lightgrey)
 
 Inspector is a security tool with the purpose of identifying users who have both successfully and unsuccessfully switched to root or another user linux based distributions.

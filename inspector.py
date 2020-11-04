@@ -82,11 +82,11 @@ if geteuid() != 0:
 #
 ################################################################################
 
-# Accesses the items inside count, which contains the victims/users who were
-#  switched to
 def section_two():
-    # Need to access the items inside count, which contains the victims/users
-    #  who were switched to
+    """
+    Accesses the items inside count, which contains the victims/users who were
+    switched to
+    """
     for victim, counter in count.items():
         end_of_sentence = str(counter) + (" time" + defclr if counter == 1 else
                                           " times" + defclr)
@@ -124,7 +124,7 @@ while start_date <= today:
                                             " times" + defclr)
 
             if "~" in user:
-                print("{}   {} is not in the sudoers file and tried to execute a"
+                print("{}   {} is not in the sudoers fdile and tried to execute a"
                       "command with root privilege {}".format(red, user, end_of_sentence))
             elif "+" in user:
                 print("{}   {} became root {}".format(red, user, end_of_sentence))

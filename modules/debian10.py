@@ -2,6 +2,14 @@ from modules.globalvar import *
 
 
 def identifying_text(file):
+    """
+    Looks through '/var/log/auth.log' to identify specific logs that can be used
+    to identify actions performed by a user
+
+    Parameters
+    ----------
+        file: Specifies the file that is inspected/looked through
+    """
     for line in file:
         fields = line.split()
         date_str = " ".join(fields[0:2]) + " "

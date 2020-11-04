@@ -83,10 +83,10 @@ if geteuid() != 0:
 ################################################################################
 
 # Accesses the items inside count, which contains the victims/users who were
-# switched to
+#  switched to
 def section_two():
     # Need to access the items inside count, which contains the victims/users
-    # who were switched to
+    #  who were switched to
     for victim, counter in count.items():
         end_of_sentence = str(counter) + (" time" + defclr if counter == 1 else
                                           " times" + defclr)
@@ -100,7 +100,7 @@ def section_two():
 ################################################################################
 
 # Looks through "auth.log.1" if starting date is not located in "auth.log" then
-# continues through "auth.log"
+#  continues through "auth.log"
 with open("/var/log/auth.log", "r") as txt:
     identifying_text(txt)
     if start_date.strftime("On %b %d:").replace(" 0", "  ") not in txt:
@@ -117,8 +117,8 @@ while start_date <= today:
 
     # A.3.
     if users:
-        # user, count is used because we're reading from a counter, which is a
-        # dict that maps username to count of occurrences
+        # 'user, count' is used because we're reading from a counter, which is a dict that maps
+        #  username to count of occurrences
         for user, count in users.items():
             end_of_sentence = str(count) + (" time" + defclr if count == 1 else
                                             " times" + defclr)

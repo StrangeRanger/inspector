@@ -100,7 +100,7 @@ def section_two():
 ################################################################################
 
 # Looks through "auth.log.1" if starting date is not located in "auth.log" then
-#  continues through "auth.log"
+# continues through "auth.log"
 with open("/var/log/auth.log", "r") as txt:
     identifying_text(txt)
     if start_date.strftime("On %b %d:").replace(" 0", "  ") not in txt:
@@ -118,7 +118,7 @@ while start_date <= today:
     # A.3.
     if users:
         # 'user, count' is used because we're reading from a counter, which is a dict that maps
-        #  username to count of occurrences
+        # username to count of occurrences
         for user, count in users.items():
             end_of_sentence = str(count) + (" time" + defclr if count == 1 else
                                             " times" + defclr)

@@ -4,7 +4,7 @@ from sys import exit
 from os import geteuid
 
 # Number of days that will be checked that came before today: N = 1 means that today's
-#   and yesterday's logs will be checked
+# and yesterday's logs will be checked
 N = 8
 today = datetime.now().date()
 start_date = today - timedelta(days=N)

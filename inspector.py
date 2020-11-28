@@ -19,10 +19,10 @@ class DateError(Exception):
 #
 ################################################################################
 
-red = "\033[1;31m"
-cyan = "\033[1;36m"
-green = "\033[0;32m"
-defclr = "\033[0m"
+RED = "\033[1;31m"
+CYAN = "\033[1;36m"
+GREEN = "\033[0;32m"
+DEFCLR = "\033[0m"
 
 
 ################################################################################
@@ -37,8 +37,8 @@ defclr = "\033[0m"
 try:
     import distro
 except ImportError:
-    exit("{}'distro' is not installed and is required to run this program{}\n\n"
-         "Exiting...".format(red, defclr))
+    exit("{}'distro' is not installed and is required to run this program{}\n"
+         "\nExiting...".format(RED, DEFCLR))
 
 distribution = distro.id()
 distro_version = distro.version(pretty=False, best=False)
@@ -68,12 +68,12 @@ if not supported:
     exit("{}Distro ID: {}\n"
          "Distro Version: {}\n\n"
          "Your operating system is not supported by inspector{}\n\n"
-         "Exiting...".format(red, distribution, distro_version, defclr))
+         "Exiting...".format(RED, distribution, distro_version, DEFCLR))
 
 # Checks to see if this script was executed with root privilege
 if geteuid() != 0:
     exit("{}Please run this script as root or with root privilege{}\n\n"
-         "Exiting...".format(red, defclr))
+         "Exiting...".format(RED, DEFCLR))
 
 
 ################################################################################
@@ -88,9 +88,9 @@ def section_two():
     switched to
     """
     for victim, counter in count.items():
-        end_of_sentence = str(counter) + (" time" + defclr if counter == 1 else
-                                          " times" + defclr)
-        print("     {} {} {}".format(red, victim, end_of_sentence))
+        end_of_sentence = str(counter) + (" time" + DEFCLR if counter == 1 else
+                                          " times" + DEFCLR)
+        print("     {} {} {}".format(RED, victim, end_of_sentence))
 
 
 ################################################################################
@@ -120,29 +120,29 @@ while start_date <= today:
         # 'user, count' is used because we're reading from a counter, which is a dict that maps
         # username to count of occurrences
         for user, count in users.items():
-            end_of_sentence = str(count) + (" time" + defclr if count == 1 else
-                                            " times" + defclr)
+            end_of_sentence = str(count) + (" time" + DEFCLR if count == 1 else
+                                            " times" + DEFCLR)
 
             if "~" in user:
                 print("{}   {} is not in the sudoers fdile and tried to execute a"
-                      "command with root privilege {}".format(red, user, end_of_sentence))
+                      "command with root privilege {}".format(RED, user, end_of_sentence))
             elif "+" in user:
-                print("{}   {} became root {}".format(red, user, end_of_sentence))
+                print("{}   {} became root {}".format(RED, user, end_of_sentence))
             elif "*" in user:
-                print("{}   {} tried to become root {}".format(red, user, end_of_sentence))
+                print("{}   {} tried to become root {}".format(RED, user, end_of_sentence))
     else:
-        print("{}   No one became root{}".format(green, defclr))
+        print("{}   No one became root{}".format(GREEN, DEFCLR))
 
     # B.3.
     if victims:
         for user, count in  victims.items():
             if "-" in user:
-                print("{}   {} switched to".format(red, user))
+                print("{}   {} switched to".format(RED, user))
                 section_two()
             elif "/" in user:
-                print("{}   {} tried to switch to".format(red, user))
+                print("{}   {} tried to switch to".format(RED, user))
                 section_two()
     else:
-        print("{}   No one switched users{}".format(green, defclr))
+        print("{}   No one switched users{}".format(GREEN, DEFCLR))
 
     start_date += timedelta(days=1)

@@ -2,7 +2,7 @@
 
 ################################################################################
 #
-# Importing and class class creation
+# [ Importing and class class creation ]
 #
 ################################################################################
 
@@ -15,7 +15,7 @@ class DateError(Exception):
 
 ################################################################################
 #
-# Global [ variables ]
+# [ Variables ]
 #
 ################################################################################
 
@@ -27,7 +27,7 @@ DEFCLR = "\033[0m"
 
 ################################################################################
 #
-# [ Pre-main ]
+# [ Prepping ]
 #
 # Verifies that the python package "distro" is installed, then checks what
 # distro the program is running on
@@ -45,19 +45,22 @@ distro_version = distro.version(pretty=False, best=False)
 
 if distribution == "ubuntu":
     if distro_version == "16.04":
-        from modules.ubuntudebian import *
+        from modules.distro_specific import debian9_ubuntu16 as identifying_text
         supported = True
     elif distro_version == "18.04":
-        from modules.ubuntudebian import *
+        from modules.distro_specific import debian9_ubuntu16 as identifying_text
         supported = True
+    #elif distro_version == "20.04":
+    #    from modules.distro_specific import debian10_ubuntu20 as identifying_text
+    #    supported = True
     else:
         supported = False
 elif distribution == "debian":
     if distro_version == "9":
-        from modules.ubuntudebian import *
+        from modules.distro_specific import debian9_ubuntu16 as identifying_text
         supported = True
     elif distro_version == "10":
-        from modules.debian10 import *
+        from modules.distro_specific import debian10_ubuntu20 as identifying_text
         supported = True
     else:
         supported = False

@@ -50,9 +50,9 @@ if distribution == "ubuntu":
     elif distro_version == "18.04":
         from modules.distro_specific import debian9_ubuntu16 as identifying_text
         supported = True
-    #elif distro_version == "20.04":
-    #    from modules.distro_specific import debian10_ubuntu20 as identifying_text
-    #    supported = True
+    elif distro_version == "20.04":
+        from modules.distro_specific import debian10_ubuntu20 as identifying_text
+        supported = True
     else:
         supported = False
 elif distribution == "debian":

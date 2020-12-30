@@ -24,13 +24,12 @@ CYAN = "\033[1;36m"
 GREEN = "\033[0;32m"
 DEFCLR = "\033[0m"
 
-
 ################################################################################
 #
 # [ Prepping ]
 #
 # Verifies that the python package "distro" is installed, then checks what
-# distro the program is running on
+# Linux Distribution the program is running on
 #
 ################################################################################
 
@@ -44,10 +43,7 @@ distribution = distro.id()
 distro_version = distro.version(pretty=False, best=False)
 
 if distribution == "ubuntu":
-    if distro_version == "16.04":
-        from modules.distro_specific import debian9_ubuntu16 as identifying_text
-        supported = True
-    elif distro_version == "18.04":
+    if distro_version == "16.04" or distro_version == "18.04":
         from modules.distro_specific import debian9_ubuntu16 as identifying_text
         supported = True
     elif distro_version == "20.04":
@@ -73,9 +69,9 @@ if not supported:
          "Your operating system is not supported by inspector{}\n\n"
          "Exiting...".format(RED, distribution, distro_version, DEFCLR))
 
-# Checks to see if this script was executed with root privilege
+# Checks to see if the program was executed with root privilege
 if geteuid() != 0:
-    exit("{}Please run this script as root or with root privilege{}\n\n"
+    exit("{}Please run this program as or with root privilege{}\n\n"
          "Exiting...".format(RED, DEFCLR))
 
 
@@ -85,15 +81,15 @@ if geteuid() != 0:
 #
 ################################################################################
 
-def section_two():
+def get_count_info():
     """
     Accesses the items inside count, which contains the victims/users who were
     switched to
     """
     for victim, counter in count.items():
-        end_of_sentence = str(counter) + (" time" + DEFCLR if counter == 1 else
-                                          " times" + DEFCLR)
-        print("     {} {} {}".format(RED, victim, end_of_sentence))
+        victim_sentence_end = str(counter) + (" time" + DEFCLR if counter == 1 else
+                                              " times" + DEFCLR)
+        print("     {} {} {}".format(RED, victim, victim_sentence_end))
 
 
 ################################################################################
@@ -104,47 +100,46 @@ def section_two():
 
 # Looks through "auth.log.1" if starting date is not located in "auth.log" then
 # continues through "auth.log"
-with open("/var/log/auth.log", "r") as txt:
-    identifying_text(txt)
-    if start_date.strftime("On %b %d:").replace(" 0", "  ") not in txt:
+# TODO: Maybe add a way to reach even older auth.log's
+with open("/var/log/auth.log", "r") as file:
+    identifying_text(file)
+    if start_date.strftime("On %b %d:").replace(" 0", "  ") not in file:
         try:
-            with open("/var/log/auth.log.1", "r") as txt1:
-                identifying_text(txt1)   
+            with open("/var/log/auth.log.1", "r") as file2:
+                identifying_text(file2)
         except IOError:
-            None
+            pass
 
 while start_date <= today:
-    print(start_date.strftime("On %b %d:"))
     users = days[start_date]
     victims = daysv2[start_date]
 
-    # A.3.
-    if users:
-        # 'user, count' is used because we're reading from a counter, which is a dict that maps
-        # username to count of occurrences
+    print(start_date.strftime("On %b %d:"))
+    if users:  # A.3.
         for user, count in users.items():
-            end_of_sentence = str(count) + (" time" + DEFCLR if count == 1 else
-                                            " times" + DEFCLR)
+            user_sentence_end = str(count) + (" time" + DEFCLR if count == 1
+                                              else " times" + DEFCLR)
 
             if "~" in user:
-                print("{}   {} is not in the sudoers fdile and tried to execute a"
-                      "command with root privilege {}".format(RED, user, end_of_sentence))
+                print("{}   {} is not in the sudoers file and tried to execute a"
+                      "command with root privilege {}".format(RED, user,
+                                                              user_sentence_end))
             elif "+" in user:
-                print("{}   {} became root {}".format(RED, user, end_of_sentence))
+                print("{}   {} became root {}".format(RED, user, user_sentence_end))
             elif "*" in user:
-                print("{}   {} tried to become root {}".format(RED, user, end_of_sentence))
+                print("{}   {} tried to become root {}".format(RED, user,
+                                                               user_sentence_end))
     else:
         print("{}   No one became root{}".format(GREEN, DEFCLR))
 
-    # B.3.
-    if victims:
-        for user, count in  victims.items():
+    if victims:  # B.3.
+        for user, count in victims.items():
             if "-" in user:
                 print("{}   {} switched to".format(RED, user))
-                section_two()
+                get_count_info()
             elif "/" in user:
                 print("{}   {} tried to switch to".format(RED, user))
-                section_two()
+                get_count_info()
     else:
         print("{}   No one switched users{}".format(GREEN, DEFCLR))
 

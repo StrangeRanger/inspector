@@ -9,6 +9,7 @@ Below is a list of all the affected linux distributions:
 * Ubuntu
     * 16.04
     * 18.04
+    * 20.04
 * Debian
     * 9
     * 10
@@ -21,6 +22,10 @@ Below is a list of all the affected linux distributions:
 
 * Debian 10
 
-## What it doesn't do
+## Non-Supported Shells
+
+If a maliscious user uses a shell that inspector does not support, it is not possible to identify the user who become root or switched to another user.
+
+## What It Doesn't Do
 
 Inspector will not identify the root user for anything, even if any actions performed by root meet the capabilities of the program. This means that if for some reason, root changes to a different user, Inspector will not identify root as doing so.

@@ -10,6 +10,11 @@ def debian10_ubuntu20(file):
     ----------
         file: Specifies the file that is inspected/looked through
     """
+    # TODO: Modify to use regular expressions to remove repeated code with 'usr'
+    su_bin = ["COMMAND=/bin/su", "COMMAND=/usr/bin/su"]
+    shell_bin = ["COMMAND=/bin/bash", "COMMAND=/usr/bin/bash", "COMMAND=/bin/sh", 
+                 "COMMAND=/usr/bin/sh", "COMMAND=/bin/zsh", "COMMAND=/usr/bin/zsh"]
+
     for line in file:
         fields = line.split()
         date_str = " ".join(fields[0:2]) + " "
@@ -37,19 +42,19 @@ def debian10_ubuntu20(file):
             user = fields[5]
             # Successful
             conditions = user != "root" and (fields[8] != "incorrect" and fields[8] != "NOT" if len(fields) >= 9 else None) and \
-                         fields[-4] == "USER=root" and fields[-2] in ("COMMAND=/bin/su", "COMMAND=/usr/bin/su")
+                         fields[-4] == "USER=root" and fields[-2] in su_bin
             # Unsuccessful
             conditions2 = user != "root" and (fields[8] == "incorrect" if len(fields) >= 9 else None) and \
-                          fields[-4] == "USER=root" and fields[-2] in ("COMMAND=/bin/su", "COMMAND=/usr/bin/su")
+                          fields[-4] == "USER=root" and fields[-2] in su_bin
             # `sudo su`...
-            conditions3 = fields[-3] == "USER=root" and fields[-1] in ("COMMAND=/bin/su", "COMMAND=/usr/bin/su")
+            conditions3 = fields[-3] == "USER=root" and fields[-1] in su_bin
             # `sudo -i` and `sudo bash` # D.1. purposefully separated from conditions3,
             # else when previous commands are used, the number of times a user
             # attempts to log into an account becomes twice as many as actual;
             # without writing a paragraph, this is due to what text is being
             # looked for, and what is produced when the commands above are (in
             # this comment) are executed
-            conditions35 = fields[-3] == "USER=root" and fields[-1] in ("COMMAND=/bin/bash", "COMMAND=/usr/bin/bash")
+            conditions35 = fields[-3] == "USER=root" and fields[-1] in shell_bin
 
             # "..."; identifies users who are not in the sudoers file and tried
             # to execute a command with root privilege
@@ -119,6 +124,12 @@ def debian9_ubuntu16(file):
     ----------
         file: Specifies the file that is inspected/looked through
     """
+    # TODO: Modify to use regular expressions to remove repeated code with 'usr'
+    su_bin = ["COMMAND=/bin/su", "COMMAND=/usr/bin/su"]
+    command_bin = ["COMMAND=/bin/bash", "COMMAND=/usr/bin/bash", "COMMAND=/bin/sh",
+                 "COMMAND=/usr/bin/sh", "COMMAND=/bin/zsh", "COMMAND=/usr/bin/zsh",
+                 "COMMAND=/bin/su", "COMMAND=/usr/bin/su"]
+
     for line in file:
         fields = line.split() 
         date_str = " ".join(fields[0:2]) + " "
@@ -146,12 +157,12 @@ def debian9_ubuntu16(file):
             user = fields[5]
             # Successful
             conditions = user != "root" and (fields[8] != "incorrect" and fields[8] != "NOT" if len(fields) >= 9 else None) and \
-                         fields[-4] == "USER=root" and fields[-2] == "COMMAND=/bin/su"
+                         fields[-4] == "USER=root" and fields[-2] in su_bin
             # Unsuccessful
             conditions2 = user != "root" and (fields[8] == "incorrect" if len(fields) >= 9 else None) and \
-                          fields[-4] == "USER=root" and fields[-2] == "COMMAND=/bin/su"
+                          fields[-4] == "USER=root" and fields[-2] in su_bin
             # `sudo su`...
-            conditions3 = fields[-3] == "USER=root" and fields[-1] in ("COMMAND=/bin/bash", "COMMAND=/bin/sh", "COMMAND=/bin/su")
+            conditions3 = fields[-3] == "USER=root" and fields[-1] in command_bin
 
             # "..."; identifies users who are not in the sudoers file and tried to execute
             # a command with root privilege

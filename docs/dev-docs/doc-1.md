@@ -22,8 +22,8 @@ Other `sudo` alternatives:
 
 |                  | sudo -i                                                                                                                                               | sudo bash                                                                                                                                             |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Successful**   | **Log input:** `sudo: <username> : TTY=<n> ; PWD= <pwd> ; USER=root ; COMMAND=/bin/bash`<br>*Identifying Symbol:* +                                   | **Log input:** `sudo: <username> : TTY=<n> ; PWD= <pwd> ; USER=root ; COMMAND=/bin/bash`<br>*Identifying Symbol:* +                                   |
-| **Unsuccessful** | **Log input:** `sudo: <username> : <n> incorrect password attempts ; TTY=<n> ; PWD=<pwd> ; USER=root ; COMMAND=/bin/bash`<br>*Identifying Symbol:* \* | **Log input:** `sudo: <username> : <n> incorrect password attempts ; TTY=<n> ; PWD=<pwd> ; USER=root ; COMMAND=/bin/bash`<br>*Identifying Symbol:* \* |
+| **Successful**   | **Log input:** `sudo: <username> : TTY=<n> ; PWD= <pwd> ; USER=root ; COMMAND=<shell path>`<br>*Identifying Symbol:* +                                   | **Log input:** `sudo: <username> : TTY=<n> ; PWD= <pwd> ; USER=root ; COMMAND=<shell path>`<br>*Identifying Symbol:* +                                   |
+| **Unsuccessful** | **Log input:** `sudo: <username> : <n> incorrect password attempts ; TTY=<n> ; PWD=<pwd> ; USER=root ; COMMAND=<shell path>`<br>*Identifying Symbol:* \* | **Log input:** `sudo: <username> : <n> incorrect password attempts ; TTY=<n> ; PWD=<pwd> ; USER=root ; COMMAND=<shell path>`<br>*Identifying Symbol:* \* |
 
 When users who don't have sudo power use `sudo`:
 

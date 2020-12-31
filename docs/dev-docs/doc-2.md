@@ -20,8 +20,8 @@ Other `sudo` alternatives:
 
 |                  | sudo -i                                                                                                                                         | sudo bash                                                                                                                                       |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Successful**   | **Log input:** `<username> : TTY=<n> ; PWD= <pwd> ; USER=root ; COMMAND=/bin/bash`<br>*Identifying Symbol:* +                                   | **Log input:** `<username> : TTY=<n> ; PWD= <pwd> ; USER=root ; COMMAND=/bin/bash`<br>*Identifying Symbol:* +                                   |
-| **Unsuccessful** | **Log input:** `<username> : <n> incorrect password attempts ; TTY=<n> ; PWD=<pwd> ; USER=root ; COMMAND=/bin/bash`<br>*Identifying Symbol:* \* | **Log input:** `<username> : <n> incorrect password attempts ; TTY=<n> ; PWD=<pwd> ; USER=root ; COMMAND=/bin/bash`<br>*Identifying Symbol:* \* |
+| **Successful**   | **Log input:** `<username> : TTY=<n> ; PWD= <pwd> ; USER=root ; COMMAND=<shell path>`<br>*Identifying Symbol:* +                                   | **Log input:** `<username> : TTY=<n> ; PWD= <pwd> ; USER=root ; COMMAND=<shell path>`<br>*Identifying Symbol:* +                                   |
+| **Unsuccessful** | **Log input:** `<username> : <n> incorrect password attempts ; TTY=<n> ; PWD=<pwd> ; USER=root ; COMMAND=<shell path>`<br>*Identifying Symbol:* \* | **Log input:** `<username> : <n> incorrect password attempts ; TTY=<n> ; PWD=<pwd> ; USER=root ; COMMAND=<shell path>`<br>*Identifying Symbol:* \* |
 
 When users who don't have sudo power use `sudo`:
 

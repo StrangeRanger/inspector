@@ -9,17 +9,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 
 - Officially supports Ubuntu 20.04
-- Can now identify users that use zsh
-
+- Relies on `/etc/shells` to know what shells Inspector should keep track of
 
 ## [2.0.0] - 2020-07-26
 
-## Added
+### Added
 
 - If ran without root privilege, users will be notified and the program will exit 
 - Will present Distro ID and a version number if run on an unsupported distribution/OS
 
-## Changed
+### Changed
 
 - Moved documentation to mkdocs, which is now hosted on readthedocs.org
 - Moved the identifying pattern files (now called identifying logs) to mkdocs on readthedocs.org
@@ -28,7 +27,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Removed cron scripts till they can be properly implemented
 - Updated code to better follow personal and PEP style guide 
 
-## Fixed
+### Fixed
 
 - A few small bugs
 

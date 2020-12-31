@@ -1,0 +1,11 @@
+On Dec 31:
+   *ranger tried to become root 14 times
+   +ranger became root 6 times
+   /ranger tried to switch to
+      tester 4 times
+      duck 1 time
+   -ranger switched to
+      tester 2 times
+      nonexistentuser 1 time
+
+'duck 1 time' was a result of manually executing `su duck` (su-ing a non-existant user) (this only works on Ubuntu 16.04 and 18.04 and debian 9

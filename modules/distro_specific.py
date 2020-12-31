@@ -10,10 +10,12 @@ def debian10_ubuntu20(file):
     ----------
         file: Specifies the file that is inspected/looked through
     """
-    # TODO: Modify to use regular expressions to remove repeated code with 'usr'
     su_bin = ["COMMAND=/bin/su", "COMMAND=/usr/bin/su"]
-    shell_bin = ["COMMAND=/bin/bash", "COMMAND=/usr/bin/bash", "COMMAND=/bin/sh", 
-                 "COMMAND=/usr/bin/sh", "COMMAND=/bin/zsh", "COMMAND=/usr/bin/zsh"]
+    shell_bin = []
+    shells = open("/etc/shells", "r")
+
+    for line in shells:
+        shell_bin.append("COMMAND={}".format(line.strip()))
 
     for line in file:
         fields = line.split()
@@ -31,7 +33,7 @@ def debian10_ubuntu20(file):
         # checkout the line in the file.
         except ValueError:
             print("{}There was an abnormality in /var/log/auth.log: {}{}\n"
-                  .format(cyan, line, defclr))
+                  .format(CYAN, line, DEFCLR))
             continue
 
         if date < start_date:
@@ -45,8 +47,7 @@ def debian10_ubuntu20(file):
                          fields[-4] == "USER=root" and fields[-2] in su_bin
             # Unsuccessful
             conditions2 = user != "root" and (fields[8] == "incorrect" if len(fields) >= 9 else None) and \
-                          fields[-4] == "USER=root" and fields[-2] in su_bin
-            # `sudo su`...
+                          fields[-4] == "USER=root" and fields[18] in su_bin
             conditions3 = fields[-3] == "USER=root" and fields[-1] in su_bin
             # `sudo -i` and `sudo bash` # D.1. purposefully separated from conditions3,
             # else when previous commands are used, the number of times a user
@@ -124,14 +125,15 @@ def debian9_ubuntu16(file):
     ----------
         file: Specifies the file that is inspected/looked through
     """
-    # TODO: Modify to use regular expressions to remove repeated code with 'usr'
     su_bin = ["COMMAND=/bin/su", "COMMAND=/usr/bin/su"]
-    command_bin = ["COMMAND=/bin/bash", "COMMAND=/usr/bin/bash", "COMMAND=/bin/sh",
-                 "COMMAND=/usr/bin/sh", "COMMAND=/bin/zsh", "COMMAND=/usr/bin/zsh",
-                 "COMMAND=/bin/su", "COMMAND=/usr/bin/su"]
+    shell_bin = ["COMMAND=/bin/su", "COMMAND=/usr/bin/su"]
+    shells = open("/etc/shells", "r")
+
+    for line in shells:
+        shell_bin.append("COMMAND={}".format(line.strip()))
 
     for line in file:
-        fields = line.split() 
+        fields = line.split()
         date_str = " ".join(fields[0:2]) + " "
         # Makes sure that the log date is correct; if current date is January 01
         # 2020 and looking a line in log with date Dec 31 that was logged in
@@ -146,12 +148,12 @@ def debian9_ubuntu16(file):
         # checkout the line in the file.
         except ValueError:
             print("{}There was an abnormality in /var/log/auth.log: {}{}\n"
-                  .format(cyan, line, defclr))
+                  .format(CYAN, line, DEFCLR))
             continue
 
         if date < start_date:
             # Too old for interest
-            continue 
+            continue
         # "user : TTY=tty/1 ; PWD=/home/user ; USER=root ; COMMAND=/bin/su"
         if fields[4] == "sudo:":
             user = fields[5]
@@ -162,7 +164,7 @@ def debian9_ubuntu16(file):
             conditions2 = user != "root" and (fields[8] == "incorrect" if len(fields) >= 9 else None) and \
                           fields[-4] == "USER=root" and fields[-2] in su_bin
             # `sudo su`...
-            conditions3 = fields[-3] == "USER=root" and fields[-1] in command_bin
+            conditions3 = fields[-3] == "USER=root" and fields[-1] in shell_bin
 
             # "..."; identifies users who are not in the sudoers file and tried to execute
             # a command with root privilege
@@ -187,7 +189,7 @@ def debian9_ubuntu16(file):
                 days[date]["*" + user] += int(fields[7])  # A.2.
             # "..."; identifies users who successfully switched users using
             # `sudo su <username>`
-            elif conditions and fields[-1] != "root": 
+            elif conditions and fields[-1] != "root":
                 victim = fields[14]
                 daysv2[date]["-" + user][victim] += 1  # B.2.
             # "..."; identifies users who unsuccessfully switched users using

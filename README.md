@@ -27,12 +27,3 @@ To install all of the dependencies for Inspector, run the following command: `py
 |---------------|-----------------|
 | Ubuntu        | 16.04<br>18.04<br>20.04 |
 | Debian        | 9<br>10         |
-
-## Supported Shells
-
-When a user becomes root or switches to another user, the kind of shell the user was using is detailed in the log. This shell must be one that is currently listed in inpsector's code. Below is a list of all the current shells that inspector supports/can detect
-
-- bash
-- sh
-- zsh
-- *More to be added*

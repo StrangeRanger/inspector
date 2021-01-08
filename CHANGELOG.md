@@ -10,6 +10,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - Officially supports Ubuntu 20.04
 - Relies on `/etc/shells` to know what shells Inspector should keep track of
+- Scripts that test compatability
+
+### Changed
+
+- Documentation changes
 
 ## [2.0.0] - 2020-07-26
 

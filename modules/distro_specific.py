@@ -1,6 +1,10 @@
 from modules.globalvar import *
 
 
+class DateError(Exception):
+    pass
+
+
 def debian10_ubuntu20(file):
     """
     Lobioks through '/var/log/auth.log' to identify specific logs that can be used

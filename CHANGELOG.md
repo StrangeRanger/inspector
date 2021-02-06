@@ -58,7 +58,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - A few small bugs
 
-[Unreleased]: https://github.com/StrangeRanger/inspector/compare/v2.1.1...HEAD
+[Unreleased]: https://github.com/StrangeRanger/inspector/compare/v2.1.0...HEAD
 [2.1.1]: https://github.com/StrangeRanger/inspector/releases/tag/v2.1.1
 [2.1.0]: https://github.com/StrangeRanger/inspector/releases/tag/v2.1.0
 [2.0.0]: https://github.com/StrangeRanger/inspector/releases/tag/v2.0.0

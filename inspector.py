@@ -6,9 +6,10 @@
 #
 ################################################################################
 
-from modules.globalvar import *
+from modules.globalvar import RED, GREEN, DEFCLR, today, days, daysv2, start_date
 from sys import exit
 from os import geteuid
+from datetime import timedelta
 
 
 ################################################################################
@@ -34,15 +35,18 @@ distro_version = distro.version(pretty=False, best=False)
 if distribution == "ubuntu":
     if distro_version in ("16.04", "18.04"):
         from modules.distro_specific import debian9_ubuntu16 as identifying_text
+
         supported = True
     elif distro_version == "20.04":
         from modules.distro_specific import debian10_ubuntu20 as identifying_text
+
         supported = True
     else:
         supported = False
 elif distribution == "debian":
     if distro_version == "9":
         from modules.distro_specific import debian9_ubuntu16 as identifying_text
+
         supported = True
     elif distro_version == "10":
         from modules.distro_specific import debian10_ubuntu20 as identifying_text

@@ -1,4 +1,5 @@
-from modules.globalvar import *
+from modules.globalvar import CYAN, DEFCLR, today, start_date, this_year, last_year, days, daysv2
+from datetime import datetime
 
 
 class DateError(Exception):

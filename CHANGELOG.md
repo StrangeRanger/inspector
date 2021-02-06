@@ -6,11 +6,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+
+## [2.1.1] - 2021-02-05
+
+### Added
+
+- Added Pipfile and Pipfile.lock for users with `pipenv` 
+
+### Changes
+
+- Updated README.md
+- Updated Documentation
+
+### Fixes
+
+- Re-definition found for builtin function PYL-W0622 (@deepsourcebot)
+- from module import * used; unable to detect undefined names PYL-W0401 (@deepsourcebot)
+- Unused import from wildcard import found PYL-W0614 (@deepsourcebot)
+- Consider using in PYL-R1714 (@deepsourcebot)
+- Module imported but unused PYL-W0611 (@deepsourcebot)
+- Undefined name detected PYL-E0602 (@deepsourcebot)
+
+
+## [2.1.0] - 2021-02-05
+
 ### Added
 
 - Officially supports Ubuntu 20.04
 - Relies on `/etc/shells` to know what shells Inspector should keep track of
-- Scripts that test compatability
+- Scripts that test compatibility
 
 ### Changed
 
@@ -37,5 +61,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - A few small bugs
 
-[Unreleased]: https://github.com/StrangeRanger/inspector/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/StrangeRanger/inspector/compare/v2.1.1...HEAD
+[2.1.1]: https://github.com/StrangeRanger/inspector/releases/tag/v2.1.1
+[2.1.0]: https://github.com/StrangeRanger/inspector/releases/tag/v2.1.0
 [2.0.0]: https://github.com/StrangeRanger/inspector/releases/tag/v2.0.0
+

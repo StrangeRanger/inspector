@@ -10,14 +10,9 @@ Inspector is a security tool with the purpose of identifying users who have both
 
 ## Getting Started
 
-### Requirements
-
-- python 3.x
-- distro
-
 ### Installing Dependencies
 
-To install all of the dependencies for Inspector, run the following command: `python3 -m pip install -r requirements.txt`
+To install dependencies for Inspector, run either of the following command: `python3 -m pip install -r requirements.txt` (installs globally) OR `pipenv install` (installs locally via pipenv)
 
 ## Officially Supported Linux Distributions
 

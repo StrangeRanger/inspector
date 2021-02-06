@@ -1,4 +1,13 @@
-from modules.globalvar import CYAN, DEFCLR, today, start_date, this_year, last_year, days, daysv2
+from modules.globalvar import (
+    CYAN,
+    DEFCLR,
+    today,
+    start_date,
+    this_year,
+    last_year,
+    days,
+    daysv2,
+)
 from datetime import datetime
 
 
@@ -8,7 +17,7 @@ class DateError(Exception):
 
 def debian10_ubuntu20(file):
     """
-    Lobioks through '/var/log/auth.log' to identify specific logs that can be used
+    Looks through '/var/log/auth.log' to identify specific logs that can be used
     to identify actions performed by a user
 
     Parameters
@@ -55,9 +64,7 @@ def debian10_ubuntu20(file):
             conditions = (
                 user != "root"
                 and (
-                    fields[8] not in ("incorrect", "NOT")
-                    if len(fields) >= 9
-                    else None
+                    fields[8] not in ("incorrect", "NOT") if len(fields) >= 9 else None
                 )
                 and fields[-4] == "USER=root"
                 and fields[-2] in su_bin
@@ -204,9 +211,7 @@ def debian9_ubuntu16(file):
             conditions = (
                 user != "root"
                 and (
-                    fields[8] not in ("incorrect", "NOT")
-                    if len(fields) >= 9
-                    else None
+                    fields[8] not in ("incorrect", "NOT") if len(fields) >= 9 else None
                 )
                 and fields[-4] == "USER=root"
                 and fields[-2] in su_bin

@@ -54,7 +54,7 @@ def debian10_ubuntu20(file):
             conditions = (
                 user != "root"
                 and (
-                    fields[8] != "incorrect" and fields[8] != "NOT"
+                    fields[8] not in ("incorrect", "NOT")
                     if len(fields) >= 9
                     else None
                 )
@@ -203,7 +203,7 @@ def debian9_ubuntu16(file):
             conditions = (
                 user != "root"
                 and (
-                    fields[8] != "incorrect" and fields[8] != "NOT"
+                    fields[8] not in ("incorrect", "NOT")
                     if len(fields) >= 9
                     else None
                 )
@@ -270,7 +270,7 @@ def debian9_ubuntu16(file):
             # root by <username>
             conditions4 = fields[-3] == "root" and fields[-1] != "root"
             # <username> by <username>
-            conditions5 = fields[-3] != "root" and fields[-1] != "root"
+            conditions5 = "root" not in (fields[-3], fields[-1])
 
             # "Successful su for root by <username>"; identifies users who've
             # successfully became root using `su` and/or `su root`

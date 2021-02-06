@@ -1,8 +1,11 @@
 import collections
 from datetime import datetime, timedelta
-from sys import exit
-from os import geteuid
 
+
+RED = "\033[1;31m"
+CYAN = "\033[1;36m"
+GREEN = "\033[0;32m"
+DEFCLR = "\033[0m"
 # Number of days that will be checked that came before today: N = 1 means that today's
 # and yesterday's logs will be checked
 N = 8

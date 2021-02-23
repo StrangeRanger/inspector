@@ -1,6 +1,10 @@
 # Inspector
 
+
+<!-- Active status commented out
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+-->
+[![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
 [![GPLv2 license](https://img.shields.io/badge/License-GPLv2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 ![Repo Size](https://img.shields.io/github/repo-size/StrangeRanger/inspector)
 ![Platform](https://img.shields.io/badge/platform-Linux-lightgrey)

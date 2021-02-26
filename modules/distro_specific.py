@@ -1,3 +1,5 @@
+"""Code that varies depending on the Linux Distribution inspector is run on."""
+
 from modules.globalvar import (
     CYAN,
     DEFCLR,
@@ -12,17 +14,26 @@ from datetime import datetime
 
 
 class DateError(Exception):
+    """
+    Raise when log date is incorrect.
+
+    See comment under the line containing 'date_str = " ".join(fields[0:2]) + " "'
+    for more information.
+    """
+
     pass
 
 
 def debian10_ubuntu20(file):
     """
-    Looks through '/var/log/auth.log' to identify specific logs that can be used
-    to identify actions performed by a user
+    Look through 'file' and find specific logs that can be used to identify actions
+    performed by a user.
 
-    Parameters
-    ----------
-        file: Specifies the file that is inspected/looked through
+    List of Linux Distributions this function is used on: Ubuntu 20.04 and Debian 10
+
+    :param file: Name of the file to be inspected
+    :type file: str
+    :return: None
     """
     su_bin = ["COMMAND=/bin/su", "COMMAND=/usr/bin/su"]
     shell_bin = []
@@ -164,12 +175,15 @@ def debian10_ubuntu20(file):
 
 def debian9_ubuntu16(file):
     """
-    Looks through '/var/log/auth.log' to identify specific logs that can be used
-    to identify actions performed by a user
+    Look through 'file' and find specific logs that can be used to identify actions
+    performed by a user.
 
-    Parameters
-    ----------
-        file: Specifies the file that is inspected/looked through
+    List of Linux Distributions this function is used on: Ubuntu 16.04 & 18.04, and
+    Debian 9
+
+    :param file: Name of the file to be inspected
+    :type file: str
+    :return: None
     """
     su_bin = ["COMMAND=/bin/su", "COMMAND=/usr/bin/su"]
     shell_bin = ["COMMAND=/bin/su", "COMMAND=/usr/bin/su"]
@@ -226,8 +240,8 @@ def debian9_ubuntu16(file):
             # `sudo su`...
             conditions3 = fields[-3] == "USER=root" and fields[-1] in shell_bin
 
-            # "..."; identifies users who are not in the sudoers file and tried to execute
-            # a command with root privilege
+            # "..."; identifies users who are not in the sudoers file and tried to
+            # execute a command with root privilege
             if user != "root" and (
                 fields[8] == "NOT"
                 and fields[10] == "sudoers"

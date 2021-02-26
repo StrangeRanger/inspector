@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+"""The main file that performs the task set by the project."""
+
 ################################################################################
 #
 # [ Importing ]
@@ -17,7 +19,7 @@ from datetime import timedelta
 # [ Prepping ]
 #
 # Verifies that the python package "distro" is installed, then checks what
-# Linux Distribution the program is running on
+# Linux Distribution the program is running on.
 #
 ################################################################################
 
@@ -82,8 +84,10 @@ if geteuid() != 0:
 
 def get_count_info():
     """
-    Accesses the items inside count, which contains the victims/users who were
-    switched to
+    Access the items inside counter, which contains the victims/users who were
+    switched to.
+
+    :return: None
     """
     for victim, counter in count.items():
         victim_sentence_end = str(counter) + (
@@ -100,7 +104,7 @@ def get_count_info():
 
 # Looks through "auth.log.1" if starting date is not located in "auth.log" then
 # continues through "auth.log"
-# TODO: Maybe add a way to reach even older auth.log's
+# TODO: Add a way to reach even older auth.log's
 with open("/var/log/auth.log", "r") as file:
     identifying_text(file)
     if start_date.strftime("On %b %d:").replace(" 0", "  ") not in file:

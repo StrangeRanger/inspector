@@ -1,3 +1,5 @@
+"""Contains variables used by both 'distro_specific.py' and 'inspector.py."""
+
 import collections
 from datetime import datetime, timedelta
 

@@ -8,10 +8,10 @@
 #
 ################################################################################
 
-from modules.globalvar import RED, GREEN, DEFCLR, today, days, daysv2, start_date
 from sys import exit
 from os import geteuid
 from datetime import timedelta
+from modules.globalvar import RED, GREEN, DEFCLR, today, days, daysv2, start_date
 
 
 ################################################################################
@@ -83,11 +83,8 @@ if geteuid() != 0:
 
 
 def get_count_info():
-    """
-    Access the items inside counter, which contains the victims/users who were
+    """Access the items inside counter, which contains the victims/users who were
     switched to.
-
-    :return: None
     """
     for victim, counter in count.items():
         victim_sentence_end = str(counter) + (

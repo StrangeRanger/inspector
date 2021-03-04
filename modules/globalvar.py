@@ -7,14 +7,22 @@ RED = "\033[1;31m"
 CYAN = "\033[1;36m"
 GREEN = "\033[0;32m"
 DEFCLR = "\033[0m"
-# Number of days that will be checked that came before today: N = 1 means that today's
-# and yesterday's logs will be checked
 N = 8
+"""Number of days prior to today, that'll be checked.
+
+If N = 1, logs that were created today and yesterday will be checked.
+"""
 today = datetime.now().date()
+"""Today's date"""
 start_date = today - timedelta(days=N)
+"""The date to begin inspecting from"""
 this_year = datetime.now().year
+"""Current year"""
 last_year = this_year - 1
-# A.1. A defaultdict that maps objects (dates and users) to a counter
-days = collections.defaultdict(collections.Counter)
-# B.1. Two nested defaultdicts that map objects (dates, users, and victims) to a counter
-daysv2 = collections.defaultdict(lambda: collections.defaultdict(collections.Counter))
+"""Last year"""
+days = collections.defaultdict(collections.Counter)  # A.1.
+"""Map objects (dates and users) to a counter."""
+daysv2 = collections.defaultdict(
+    lambda: collections.defaultdict(collections.Counter)
+)  # B.1.
+"""Two nested defaultdicts that map objects (dates, users, and victims) to a counter."""

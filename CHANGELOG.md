@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
-- Added Pipfile and Pipfile.lock for users with `pipenv` 
+- Added Pipfile and Pipfile.lock for users with `pipenv`
 
 ### Changes
 
@@ -18,12 +18,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Fixes
 
 - Re-definition found for builtin function PYL-W0622 (@deepsourcebot)
-- from module import * used; unable to detect undefined names PYL-W0401 (@deepsourcebot)
+- from module import \* used; unable to detect undefined names PYL-W0401 (@deepsourcebot)
 - Unused import from wildcard import found PYL-W0614 (@deepsourcebot)
 - Consider using in PYL-R1714 (@deepsourcebot)
 - Module imported but unused PYL-W0611 (@deepsourcebot)
 - Undefined name detected PYL-E0602 (@deepsourcebot)
-
 
 ## [2.1.0] - 2021-02-05
 
@@ -42,7 +41,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
-- If ran without root privilege, users will be notified and the program will exit 
+- If ran without root privilege, users will be notified and the program will exit
 - Will present Distro ID and a version number if run on an unsupported distribution/OS
 
 ### Changed
@@ -52,14 +51,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Merged what used to be two different branches for different operating systems, into the same branch
   - Code that is required for specific operating systems will be imported based on what operating system program is being run on
 - Removed cron scripts till they can be properly implemented
-- Updated code to better follow personal and PEP style guide 
+- Updated code to better follow personal and PEP style guide
 
 ### Fixed
 
 - A few small bugs
 
-[Unreleased]: https://github.com/StrangeRanger/inspector/compare/v2.1.0...HEAD
+[unreleased]: https://github.com/StrangeRanger/inspector/compare/v2.1.0...HEAD
 [2.1.1]: https://github.com/StrangeRanger/inspector/releases/tag/v2.1.1
 [2.1.0]: https://github.com/StrangeRanger/inspector/releases/tag/v2.1.0
 [2.0.0]: https://github.com/StrangeRanger/inspector/releases/tag/v2.0.0
-

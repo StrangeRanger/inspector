@@ -1,7 +1,15 @@
-"""Contains variables used by both 'distro_specific.py' and 'inspector.py."""
+"""
+Contains variables used by both 'distro_specific.py' and 'inspector.py.
+"""
+####[ Imports ]#########################################################################
+
 
 import collections
 from datetime import datetime, timedelta
+
+
+####[ Variables ]#######################################################################
+
 
 RED = "\033[1;31m"
 CYAN = "\033[1;36m"

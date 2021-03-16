@@ -1,4 +1,8 @@
-"""Code that varies depending on the Linux Distribution inspector is run on."""
+"""
+Code that varies depending on the Linux Distribution inspector is run on.
+"""
+####[ Imports ]#########################################################################
+
 
 from datetime import datetime
 from modules.globalvar import (
@@ -13,6 +17,9 @@ from modules.globalvar import (
 )
 
 
+####[ Class creation ]##################################################################
+
+
 class DateError(Exception):
     """Raise when log date is incorrect.
 
@@ -21,6 +28,9 @@ class DateError(Exception):
     """
 
     pass
+
+
+####[ Functions ]#######################################################################
 
 
 def debian10_ubuntu20(file):

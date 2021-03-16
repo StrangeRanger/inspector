@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 
-"""The main file that performs the task set by the project."""
+"""
+The main file that performs the task set by the project.
+"""
+####[ Imports ]#########################################################################
 
-################################################################################
-#
-# [ Importing ]
-#
-################################################################################
 
 from sys import exit
 from os import geteuid
@@ -14,14 +12,8 @@ from datetime import timedelta
 from modules.globalvar import RED, GREEN, DEFCLR, today, days, daysv2, start_date
 
 
-################################################################################
-#
-# [ Prepping ]
-#
-# Verifies that the python package "distro" is installed, then checks what
-# Linux Distribution the program is running on.
-#
-################################################################################
+####[ Pip imports ]#####################################################################
+
 
 try:
     import distro
@@ -30,6 +22,11 @@ except ImportError:
         "{}'distro' is not installed and is required to run this program{}\n"
         "\nExiting...".format(RED, DEFCLR)
     )
+
+
+####[ Prepping ]########################################################################
+#### Verifies that the Linux Distribution is supported by inspector
+
 
 distribution = distro.id()
 distro_version = distro.version(pretty=False, best=False)
@@ -75,11 +72,7 @@ if geteuid() != 0:
     )
 
 
-################################################################################
-#
-# [ Functions ]
-#
-################################################################################
+####[ Functions ]#######################################################################
 
 
 def get_count_info():
@@ -93,11 +86,8 @@ def get_count_info():
         print("     {} {} {}".format(RED, victim, victim_sentence_end))
 
 
-################################################################################
-#
-# [ Main ]
-#
-################################################################################
+####[ Main ]############################################################################
+
 
 # Looks through "auth.log.1" if starting date is not located in "auth.log" then
 # continues through "auth.log"

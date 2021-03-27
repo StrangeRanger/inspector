@@ -6,10 +6,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-### Added
-
-- Added Pipfile and Pipfile.lock for users with `pipenv`
-
 ### Changes
 
 - Updated README.md

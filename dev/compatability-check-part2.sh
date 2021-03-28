@@ -1,9 +1,11 @@
 #!/bin/bash
-
-###
-### Default root, tester, and user password: asdf1234!@#$ASD
-###
-
+#
+# Default root, tester, and user password: asdf1234!@#$ASD
+#
+# IMPORTANT: This script needs more testing. Do you not rely on it for accurate
+#            compatability checking.
+#
+################################################################################
 
 echo "Creating temp user 'tester'..."
 sudo adduser --quiet --gecos "" --home /home/tester --shell /bin/bash tester

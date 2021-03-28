@@ -1,0 +1,334 @@
+"""
+Code that varies depending on the Linux Distribution inspector is run on.
+"""
+####[ Imports ]#########################################################################
+
+
+from datetime import datetime
+from modules.globalvar import (
+    CYAN,
+    DEFCLR,
+    today,
+    start_date,
+    this_year,
+    last_year,
+    days,
+    daysv2,
+)
+
+
+####[ Class creation ]##################################################################
+
+
+class DateError(Exception):
+    """Raise when log date is incorrect.
+
+    See comment under the line containing 'date_str = " ".join(fields[0:2]) + " "'
+    for more information.
+    """
+
+    pass
+
+
+####[ Functions ]#######################################################################
+
+
+def debian10_ubuntu20(file):
+    """Look through 'file' and find specific logs that can be used to identify actions
+    performed by a user.
+
+    Parameters
+    ----------
+    file : str
+        Name of the file to be inspected
+
+    Notes
+    -----
+    Here is a list of Linux Distributions this function is used on:
+        - Ubuntu 20.04
+        - Debian 10
+    """
+    su_bin = ["COMMAND=/bin/su", "COMMAND=/usr/bin/su"]
+    shell_bin = []
+    shells = open("/etc/shells", "r")
+
+    for line in shells:
+        shell_bin.append("COMMAND={}".format(line.strip()))
+
+    for line in file:
+        fields = line.split()
+        date_str = " ".join(fields[0:2]) + " "
+        # Makes sure that the log date is correct; if current date is January 01
+        # 2020 and looking a line in log with date Dec 31 that was logged in
+        # 2019,the date would = Dec 31 2020. Lines below prevent this.
+        try:
+            date = datetime.strptime(date_str + str(this_year), "%b %d %Y").date()
+            if date > today:
+                raise DateError
+        except DateError:
+            date = datetime.strptime(date_str + str(last_year), "%b %d %Y").date()
+        # Will skip any abnormal/non-regular text in '/var/log/auth.log' that could
+        # produce an Error, and then prints out a message telling the user to
+        # checkout the line in the file.
+        except ValueError:
+            print(
+                "{}There was an abnormality in /var/log/auth.log: {}{}\n".format(
+                    CYAN, line, DEFCLR
+                )
+            )
+            continue
+
+        if date < start_date:
+            # Too old for interest
+            continue
+        # "user : TTY=tty/1 ; PWD=/home/user ; USER=root ; COMMAND=/bin/su"
+        if fields[4] == "sudo:":
+            user = fields[5]
+            # Successful
+            conditions = (
+                user != "root"
+                and (
+                    fields[8] not in ("incorrect", "NOT") if len(fields) >= 9 else None
+                )
+                and fields[-4] == "USER=root"
+                and fields[-2] in su_bin
+            )
+            # Unsuccessful
+            conditions2 = (
+                user != "root"
+                and (fields[8] == "incorrect" if len(fields) >= 9 else None)
+                and fields[-4] == "USER=root"
+                and fields[18] in su_bin
+            )
+            conditions3 = fields[-3] == "USER=root" and fields[-1] in su_bin
+            # `sudo -i` and `sudo bash` # D.1. purposefully separated from conditions3,
+            # else when previous commands are used, the number of times a user
+            # attempts to log into an account becomes twice as many as actual;
+            # without writing a paragraph, this is due to what text is being
+            # looked for, and what is produced when the commands above are (in
+            # this comment) are executed
+            conditions35 = fields[-3] == "USER=root" and fields[-1] in shell_bin
+
+            # "..."; identifies users who are not in the sudoers file and tried
+            # to execute a command with root privilege
+            if user != "root" and (
+                fields[8] == "NOT"
+                and fields[10] == "sudoers"
+                and fields[16] == "USER=root"
+                and fields[18].startswith("COMMAND=")
+                if len(fields) >= 9
+                else None
+            ):
+                days[date]["~" + user] += 1
+            # "..."; identifies users who successfully became root using `sudo
+            # bash` or `sudo -i` # D.1.
+            if (
+                user != "root"
+                and (fields[8] != "incorrect" if len(fields) >= 9 else None)
+                and conditions35
+            ):
+                # A.2. The defaultdict key becomes the date and its value, which
+                # is the counter, is the user, which gains a plus 1 in the counter
+                days[date]["+" + user] += 1
+            # "..."; identifies users who unsuccessfully became root using `sudo
+            # bash` or `sudo -i` # D.1.
+            elif (
+                user != "root"
+                and (fields[8] == "incorrect" if len(fields) >= 9 else None)
+                and conditions35
+            ):
+                days[date]["*" + user] += int(fields[7])  # A.2.
+            # "..."; identifies users who unsuccessfully became root using `sudo su`
+            elif (
+                user != "root"
+                and (fields[8] == "incorrect" if len(fields) >= 9 else None)
+                and conditions3
+            ):
+                days[date]["*" + user] += int(fields[7])  # A.2.
+            # "..."; identifies users who unsuccessfully became root using `sudo
+            # su root`
+            elif conditions2 and fields[-1] == "root":
+                days[date]["*" + user] += int(fields[7])  # A.2.
+            # "..."; identifies users who unsuccessfully switched users using
+            # `sudo su <username>`
+            elif conditions2 and fields[-1] != "root":
+                victim = fields[19]
+                daysv2[date]["/" + user][victim] += int(fields[7])  # B.2.
+
+        if fields[4].startswith("su:"):
+            # (to root) <username>
+            conditions4 = fields[-4] == "root)" and fields[-3] != "root"
+            # (to <victim_username>) <username>
+            conditions5 = fields[-4] != "root)" and fields[-3] != "root"
+
+            # "(to root) <username> on pts/<n>"; identifies users who've successfully
+            # became root using `su`, `su root`, `sudo su`, or `sudo su root`
+            if " ".join(fields[5:7]) == "(to root)" and conditions4:
+                user = fields[-3]
+                days[date]["+" + user] += 1  # A.2.
+            # "FAILED SU (to root) <username> on pts/<n>"; identifies users who've
+            # unsuccessfully became root using `su` and/or `su root`
+            elif " ".join(fields[5:7]) == "FAILED SU" and conditions4:
+                user = fields[-3]
+                days[date]["*" + user] += 1  # A.2.
+            # "(to <victim_username>) <username> on pts/<n>"; identifies users
+            # who've successfully switched users using `su <victim_username>`
+            # or `sudo su <victim_username>`
+            elif fields[5] == "(to" and conditions5:
+                user = fields[-3]
+                victim = fields[-4].replace(")", "")
+                daysv2[date]["-" + user][victim] += 1  # B.2.
+            # "FAILED SU (to <victim_username>) <username> on pts/<n>"; identifies
+            # users who've unsuccessfully switched users using `su <victim_username>`
+            elif " ".join(fields[5:7]) == "FAILED SU" and conditions5:
+                user = fields[-3]
+                victim = fields[-4].replace(")", "")
+                daysv2[date]["/" + user][victim] += 1  # B.2.
+
+
+def debian9_ubuntu16(file):
+    """Look through 'file' and find specific logs that can be used to identify actions
+    performed by a user.
+
+    Parameters
+    ----------
+    file : str
+        Name of the file to be inspected
+
+    Notes
+    -----
+    Here is a list of Linux Distributions this function is used on:
+        - Ubuntu 16.04
+        - Ubuntu 18.04
+        - Debian 9
+
+    """
+    su_bin = ["COMMAND=/bin/su", "COMMAND=/usr/bin/su"]
+    shell_bin = ["COMMAND=/bin/su", "COMMAND=/usr/bin/su"]
+    shells = open("/etc/shells", "r")
+
+    for line in shells:
+        shell_bin.append("COMMAND={}".format(line.strip()))
+
+    for line in file:
+        fields = line.split()
+        date_str = " ".join(fields[0:2]) + " "
+        # Makes sure that the log date is correct; if current date is January 01
+        # 2020 and looking a line in log with date Dec 31 that was logged in
+        # 2019,the date would = Dec 31 2020. Lines below prevent this.
+        try:
+            date = datetime.strptime(date_str + str(this_year), "%b %d %Y").date()
+            if date > today:
+                raise DateError
+        except DateError:
+            date = datetime.strptime(date_str + str(last_year), "%b %d %Y").date()
+        # Will skip any abnormal/non-regular text in '/var/log/auth.log' that could
+        # produce an Error, and then prints out a message telling the user to
+        # checkout the line in the file.
+        except ValueError:
+            print(
+                "{}There was an abnormality in /var/log/auth.log: {}{}\n".format(
+                    CYAN, line, DEFCLR
+                )
+            )
+            continue
+
+        if date < start_date:
+            # Too old for interest
+            continue
+        # "user : TTY=tty/1 ; PWD=/home/user ; USER=root ; COMMAND=/bin/su"
+        if fields[4] == "sudo:":
+            user = fields[5]
+            # Successful
+            conditions = (
+                user != "root"
+                and (
+                    fields[8] not in ("incorrect", "NOT") if len(fields) >= 9 else None
+                )
+                and fields[-4] == "USER=root"
+                and fields[-2] in su_bin
+            )
+            # Unsuccessful
+            conditions2 = (
+                user != "root"
+                and (fields[8] == "incorrect" if len(fields) >= 9 else None)
+                and fields[-4] == "USER=root"
+                and fields[-2] in su_bin
+            )
+            # `sudo su`...
+            conditions3 = fields[-3] == "USER=root" and fields[-1] in shell_bin
+
+            # "..."; identifies users who are not in the sudoers file and tried to
+            # execute a command with root privilege
+            if user != "root" and (
+                fields[8] == "NOT"
+                and fields[10] == "sudoers"
+                and fields[16] == "USER=root"
+                and fields[18].startswith("COMMAND=")
+                if len(fields) >= 9
+                else None
+            ):
+                days[date]["~" + user] += 1
+            # "..."; identifies users who successfully became root using `sudo su`
+            if (
+                user != "root"
+                and (fields[8] != "incorrect" if len(fields) >= 9 else None)
+                and conditions3
+            ):
+                # A.2. The defaultdict key becomes the date and its value, which
+                # is the counter, is the user, which gains a plus 1 in the counter
+                days[date]["+" + user] += 1
+            # "..."; identifies users who unsuccessfully became root using `sudo su`
+            elif (
+                user != "root"
+                and (fields[8] == "incorrect" if len(fields) >= 9 else None)
+                and conditions3
+            ):
+                days[date]["*" + user] += int(fields[7])  # A.2.
+            # "..."; identifies users who successfully became root using `sudo
+            # su root`
+            elif conditions and fields[-1] == "root":
+                days[date]["+" + user] += 1  # A.2.
+            # "..."; identifies users who unsuccessfully became root using
+            # `sudo su root`
+            elif conditions2 and fields[-1] == "root":
+                days[date]["*" + user] += int(fields[7])  # A.2.
+            # "..."; identifies users who successfully switched users using
+            # `sudo su <username>`
+            elif conditions and fields[-1] != "root":
+                victim = fields[14]
+                daysv2[date]["-" + user][victim] += 1  # B.2.
+            # "..."; identifies users who unsuccessfully switched users using
+            # `sudo su <username>`
+            elif conditions2 and fields[-1] != "root":
+                victim = fields[19]
+                daysv2[date]["/" + user][victim] += int(fields[7])  # B.2.
+
+        if fields[4].startswith("su["):
+            # root by <username>
+            conditions4 = fields[-3] == "root" and fields[-1] != "root"
+            # <username> by <username>
+            conditions5 = "root" not in (fields[-3], fields[-1])
+
+            # "Successful su for root by <username>"; identifies users who've
+            # successfully became root using `su` and/or `su root`
+            if fields[5] == "Successful" and conditions4:
+                user = fields[-1]
+                days[date]["+" + user] += 1  # A.2.
+            # "FAILED su for root by <username>"; identifies users who've
+            # unsuccessfully became root using `su` and/or `su root`
+            elif fields[5] == "FAILED" and conditions4:
+                user = fields[-1]
+                days[date]["*" + user] += 1  # A.2.
+            # "Successful su for <username> by <username>"; identifies users
+            # who've successfully switched users using `su <username>`
+            elif fields[5] == "Successful" and conditions5:
+                user = fields[-1]
+                victim = fields[-3]
+                daysv2[date]["-" + user][victim] += 1  # B.2.
+            # "FAILED su for <username> by <username>"; identifies users who've
+            # unsuccessfully switched users using `su <username>`
+            elif fields[5] == "FAILED" and conditions5:
+                user = fields[-1]
+                victim = fields[-3]
+                daysv2[date]["/" + user][victim] += 1  # B.2.

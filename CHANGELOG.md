@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [2.1.1] - 2021-03-27
+
 ### Changes
 
 - Updated README.md
@@ -53,7 +55,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - A few small bugs
 
-[unreleased]: https://github.com/StrangeRanger/inspector/compare/v2.1.0...HEAD
+[unreleased]: https://github.com/StrangeRanger/inspector/compare/v2.1.1...HEAD
 [2.1.1]: https://github.com/StrangeRanger/inspector/releases/tag/v2.1.1
 [2.1.0]: https://github.com/StrangeRanger/inspector/releases/tag/v2.1.0
 [2.0.0]: https://github.com/StrangeRanger/inspector/releases/tag/v2.0.0

@@ -1,32 +1,29 @@
 # Inspector Limitations
 
+There are unformtunatley some limitations to what inspector can do as a result of how many Linux Distributions are designed.
+
+!!! Note
+
+    For simplicity, the user who perfroms the actions (user who changed accounts), will be refered to as Mal. The user who had the actions performed against (user who was changed to), will be refered to as Vic.
+
 ## Falsely Blaming Users
 
-If a malicious user with sudo power switches to a different user on the system, then attempts to switch to root or -another- user, the victim (the user who was initially switched to) will end up being blamed for the use that command/action, rather than the malicious user.
+If Mal has sudo perms and changes to Vic's account, then attempts to switch to _another_ user, Vic will end up being reported for that action, instead than the Mal.
 
-Below is a list of all the affected linux distributions:
+Affected Distributions:
 
-- Ubuntu
-    - 16.04
-    - 18.04
-    - 20.04
-- Debian
-    - 9
-    - 10
+- Ubuntu 20.04, 18.04, and 16.04.
+- Debian 10 and 9.
 
 ## Switching To a Non-Existent User
 
-Due to a lack of logging to the system's `auth.log`, if a user uses `su [username]` or `sudo su [username]`, where the username is a non-existent user on the system, the program will not be able to identify that a user attempted to switch to another account.
+Due to a lack of logging to the system's `auth.log`, if Mal uses `su [username]` or `sudo su [username]`, where the username is a non-existent user, Inspector will not be able to identify that Mal attempted to switch to another account.
 
-Below is a list of all the affected linux distributions:
+Affected Distributions:
 
 - Ubuntu 20.04
 - Debian 10
 
-## Non-Supported Shells
+## Unsupported Shells
 
-If a malicious user uses a shell that inspector does not support, it is not possible to identify the user who become root or switched to another user. To check what shells Inspector supports on your system, use `sudo cat /etc/shells` in the terminal. This means that if a user installs a shell then removes it after doing what they are doing, they can not be identified.
-
-## What It Doesn't Do
-
-Inspector will not identify the root user for anything, even if any actions performed by root meet the capabilities of the program. This means that if for some reason, root changes to a different user, Inspector will not identify root as doing so.
+If Mal uses a shell that is not listed in `/etc/shells`, Inspector won't be able to tell that Mal did anything wrong. It's highly unlikely that this will cause any problems as this file is managed by the system, but if Mal somehow removes the shell that they used, Inspector won't be able to report them.

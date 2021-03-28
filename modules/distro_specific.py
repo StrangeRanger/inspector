@@ -1,5 +1,10 @@
-"""Code that varies depending on the Linux Distribution inspector is run on."""
+"""
+Code that varies depending on the Linux Distribution inspector is run on.
+"""
+####[ Imports ]#########################################################################
 
+
+from datetime import datetime
 from modules.globalvar import (
     CYAN,
     DEFCLR,
@@ -10,12 +15,13 @@ from modules.globalvar import (
     days,
     daysv2,
 )
-from datetime import datetime
+
+
+####[ Class creation ]##################################################################
 
 
 class DateError(Exception):
-    """
-    Raise when log date is incorrect.
+    """Raise when log date is incorrect.
 
     See comment under the line containing 'date_str = " ".join(fields[0:2]) + " "'
     for more information.
@@ -24,16 +30,23 @@ class DateError(Exception):
     pass
 
 
+####[ Functions ]#######################################################################
+
+
 def debian10_ubuntu20(file):
-    """
-    Look through 'file' and find specific logs that can be used to identify actions
+    """Look through 'file' and find specific logs that can be used to identify actions
     performed by a user.
 
-    List of Linux Distributions this function is used on: Ubuntu 20.04 and Debian 10
+    Parameters
+    ----------
+    file : str
+        Name of the file to be inspected
 
-    :param file: Name of the file to be inspected
-    :type file: str
-    :return: None
+    Notes
+    -----
+    Here is a list of Linux Distributions this function is used on:
+        - Ubuntu 20.04
+        - Debian 10
     """
     su_bin = ["COMMAND=/bin/su", "COMMAND=/usr/bin/su"]
     shell_bin = []
@@ -174,16 +187,21 @@ def debian10_ubuntu20(file):
 
 
 def debian9_ubuntu16(file):
-    """
-    Look through 'file' and find specific logs that can be used to identify actions
+    """Look through 'file' and find specific logs that can be used to identify actions
     performed by a user.
 
-    List of Linux Distributions this function is used on: Ubuntu 16.04 & 18.04, and
-    Debian 9
+    Parameters
+    ----------
+    file : str
+        Name of the file to be inspected
 
-    :param file: Name of the file to be inspected
-    :type file: str
-    :return: None
+    Notes
+    -----
+    Here is a list of Linux Distributions this function is used on:
+        - Ubuntu 16.04
+        - Ubuntu 18.04
+        - Debian 9
+
     """
     su_bin = ["COMMAND=/bin/su", "COMMAND=/usr/bin/su"]
     shell_bin = ["COMMAND=/bin/su", "COMMAND=/usr/bin/su"]

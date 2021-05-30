@@ -3,7 +3,7 @@
 # Default root, tester, and user password: asdf1234!@#$ASD
 #
 # IMPORTANT: This script needs more testing. Do you not rely on it for accurate
-#            compatability checking.
+#            compatibility checking.
 #
 ################################################################################
 

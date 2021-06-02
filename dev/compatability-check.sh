@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-CYAN=$'\033[0;36m'
-NC=$'\033[0m'
+cyan=$'\033[0;36m'
+nc=$'\033[0m'
 
 echo "Creating temp user 'tester'..."
 sudo adduser --quiet --gecos "" --home /home/tester --shell /bin/bash tester
@@ -15,59 +15,59 @@ sudo passwd root
 
 echo -e "\n\nPerforming incorrect password tests...\n"
 
-echo "${CYAN}Provide incorrect password${NC}"
+echo "${cyan}Provide incorrect password$nc"
 echo "Command: 'su'"
 su
-echo "${CYAN}Provide incorrect password${NC}"
+echo "${cyan}Provide incorrect password$nc"
 echo "Command: 'su root'"
 su root
-echo "${CYAN}Provide incorrect password${NC}"
+echo "${cyan}Provide incorrect password$nc"
 echo "Command: 'su tester'"
 su tester
-echo "${CYAN}Provide incorrect password${NC}"
+echo "${cyan}Provide incorrect password$nc"
 echo "Command: 'sudo su'"
 sudo su
-echo "${CYAN}Provide incorrect password${NC}"
+echo "${cyan}Provide incorrect password$nc"
 echo "Command: 'sudo su root'"
 sudo su root
-echo "${CYAN}Provide incorrect password${NC}"
+echo "${cyan}Provide incorrect password$nc"
 echo "Command: 'sudo su tester'"
 sudo su tester
-echo "${CYAN}Provide incorrect password${NC}"
+echo "${cyan}Provide incorrect password$nc"
 echo "Command: 'sudo -i'"
 sudo -i
-echo "${CYAN}Provide incorrect password${NC}"
+echo "${cyan}Provide incorrect password$nc"
 echo "Command: 'sudo bash'"
 sudo bash
 
 
 echo -e "\n\nPerforming correct password tests...\n"
 
-echo "${CYAN}Provide correct password${NC}"
+echo "${cyan}Provide correct password$nc"
 echo "Command: 'su'"
 su
-echo "${CYAN}Provide correct password${NC}"
+echo "${cyan}Provide correct password$nc"
 echo "Command: 'su root'"
 su root
-echo "${CYAN}Provide correct password${NC}"
+echo "${cyan}Provide correct password$nc"
 echo "Command: 'su tester'"
 su tester
-echo "${CYAN}Provide correct password${NC}"
+echo "${cyan}Provide correct password$nc"
 echo "Command: 'sudo su'"
 sudo su
-echo "${CYAN}Provide correct password${NC}"
+echo "${cyan}Provide correct password$nc"
 echo "Command: 'sudo su root'"
 sudo su root
-echo "${CYAN}Provide correct password${NC}"
+echo "${cyan}Provide correct password$nc"
 echo "Command: 'sudo su tester'"
 sudo su tester
-echo "${CYAN}Provide correct password${NC}"
+echo "${cyan}Provide correct password$nc"
 echo "Command 'sudo su nonexistentuser'"
 sudo su nonexistentuser
-echo "${CYAN}Provide correct password${NC}"
+echo "${cyan}Provide correct password$nc"
 echo "Command: 'sudo -i'"
 sudo -i
-echo "${CYAN}Provide correct password${NC}"
+echo "${cyan}Provide correct password$nc"
 echo "Command: 'sudo bash'"
 sudo bash
 

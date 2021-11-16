@@ -31,14 +31,20 @@ class DateError(Exception):
 ####[ Functions ]#######################################################################
 
 
-def debian10_ubuntu20(file: str) -> None:
+def debian10_ubuntu20(file):
     """Look through 'file' and find specific logs that can be used to identify actions
     performed by a user.
 
-    :param file: Name of the file to be inspected.
-    :note:       Here is a list of Linux Distributions this function is used on:
-                     - Ubuntu 20.04
-                     - Debian 10
+    Parameters
+    ----------
+    file : str
+        Name of the file to be inspected.
+
+    Notes
+    -----
+    Here is a list of Linux Distributions this function is used on:
+        - Ubuntu 20.04
+        - Debian 10
     """
     su_bin = ["COMMAND=/bin/su", "COMMAND=/usr/bin/su"]
     shell_bin = []
@@ -183,11 +189,17 @@ def debian9_ubuntu16(file):
     """Look through 'file' and find specific logs that can be used to identify actions
     performed by a user.
 
-    :param file: Name of the file to be inspected.
-    :note:       Here is a list of Linux Distributions this function is used on:
-                     - Ubuntu 16.04
-                     - Ubuntu 18.04
-                     - Debian 9
+    Parameters
+    ----------
+    file : str
+        Name of the file to be inspected.
+
+    Notes
+    -----
+    Here is a list of Linux Distributions this function is used on:
+        - Ubuntu 16.04
+        - Ubuntu 18.04
+        - Debian 9
     """
     su_bin = ["COMMAND=/bin/su", "COMMAND=/usr/bin/su"]
     shell_bin = ["COMMAND=/bin/su", "COMMAND=/usr/bin/su"]
